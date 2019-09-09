@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * A review of an item - for example, of a restaurant, movie, or store.
  *
  * @see http://schema.org/Review
+ *
+ * @mixin \Spatie\SchemaOrg\CreativeWork
  */
-class Review extends CreativeWork
+class Review extends BaseType
 {
     /**
      * The item that is being reviewed/rated.
@@ -21,6 +23,21 @@ class Review extends CreativeWork
     public function itemReviewed($itemReviewed)
     {
         return $this->setProperty('itemReviewed', $itemReviewed);
+    }
+
+    /**
+     * This Review or Rating is relevant to this part or facet of the
+     * itemReviewed.
+     *
+     * @param string|string[] $reviewAspect
+     *
+     * @return static
+     *
+     * @see http://schema.org/reviewAspect
+     */
+    public function reviewAspect($reviewAspect)
+    {
+        return $this->setProperty('reviewAspect', $reviewAspect);
     }
 
     /**

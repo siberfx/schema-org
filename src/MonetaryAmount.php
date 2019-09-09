@@ -10,12 +10,21 @@ namespace Spatie\SchemaOrg;
  * describe the price of an Offer, Invoice, etc.
  *
  * @see http://schema.org/MonetaryAmount
+ *
+ * @mixin \Spatie\SchemaOrg\StructuredValue
  */
-class MonetaryAmount extends StructuredValue
+class MonetaryAmount extends BaseType
 {
     /**
-     * The currency in which the monetary amount is expressed (in 3-letter [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217) format).
+     * The currency in which the monetary amount is expressed.
+     * 
+     * Use standard formats: [ISO 4217 currency
+     * format](http://en.wikipedia.org/wiki/ISO_4217) e.g. "USD"; [Ticker
+     * symbol](https://en.wikipedia.org/wiki/List_of_cryptocurrencies) for
+     * cryptocurrencies e.g. "BTC"; well known names for [Local Exchange
+     * Tradings
+     * Systems](https://en.wikipedia.org/wiki/Local_exchange_trading_system)
+     * (LETS) and other currency types e.g. "Ithaca HOUR".
      *
      * @param string|string[] $currency
      *
@@ -63,6 +72,10 @@ class MonetaryAmount extends StructuredValue
      * for values is 'Number'.
      * * For [[PropertyValue]], it can be 'Text;', 'Number', 'Boolean', or
      * 'StructuredValue'.
+     * * Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT
+     * NINE' (U+0039)) rather than superficially similiar Unicode symbols.
+     * * Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a
+     * decimal point. Avoid using these symbols as a readability separator.
      *
      * @param StructuredValue|StructuredValue[]|bool|bool[]|float|float[]|int|int[]|string|string[] $value
      *

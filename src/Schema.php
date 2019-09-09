@@ -7,6 +7,11 @@ namespace Spatie\SchemaOrg;
  */
 class Schema
 {
+    public static function aMRadioChannel(): AMRadioChannel
+    {
+        return new AMRadioChannel();
+    }
+
     public static function aPIReference(): APIReference
     {
         return new APIReference();
@@ -40,6 +45,11 @@ class Schema
     public static function action(): Action
     {
         return new Action();
+    }
+
+    public static function actionAccessSpecification(): ActionAccessSpecification
+    {
+        return new ActionAccessSpecification();
     }
 
     public static function actionStatusType(): ActionStatusType
@@ -277,6 +287,11 @@ class Schema
         return new BedDetails();
     }
 
+    public static function bedType(): BedType
+    {
+        return new BedType();
+    }
+
     public static function befriendAction(): BefriendAction
     {
         return new BefriendAction();
@@ -370,6 +385,11 @@ class Schema
     public static function broadcastEvent(): BroadcastEvent
     {
         return new BroadcastEvent();
+    }
+
+    public static function broadcastFrequencySpecification(): BroadcastFrequencySpecification
+    {
+        return new BroadcastFrequencySpecification();
     }
 
     public static function broadcastService(): BroadcastService
@@ -857,6 +877,11 @@ class Schema
         return new Distance();
     }
 
+    public static function distillery(): Distillery
+    {
+        return new Distillery();
+    }
+
     public static function donateAction(): DonateAction
     {
         return new DonateAction();
@@ -947,6 +972,11 @@ class Schema
         return new EmployeeRole();
     }
 
+    public static function employerAggregateRating(): EmployerAggregateRating
+    {
+        return new EmployerAggregateRating();
+    }
+
     public static function employmentAgency(): EmploymentAgency
     {
         return new EmploymentAgency();
@@ -955,6 +985,11 @@ class Schema
     public static function endorseAction(): EndorseAction
     {
         return new EndorseAction();
+    }
+
+    public static function endorsementRating(): EndorsementRating
+    {
+        return new EndorsementRating();
     }
 
     public static function energy(): Energy
@@ -1020,6 +1055,16 @@ class Schema
     public static function exhibitionEvent(): ExhibitionEvent
     {
         return new ExhibitionEvent();
+    }
+
+    public static function fAQPage(): FAQPage
+    {
+        return new FAQPage();
+    }
+
+    public static function fMRadioChannel(): FMRadioChannel
+    {
+        return new FMRadioChannel();
     }
 
     public static function fastFoodRestaurant(): FastFoodRestaurant
@@ -1282,6 +1327,46 @@ class Schema
         return new HousePainter();
     }
 
+    public static function howTo(): HowTo
+    {
+        return new HowTo();
+    }
+
+    public static function howToDirection(): HowToDirection
+    {
+        return new HowToDirection();
+    }
+
+    public static function howToItem(): HowToItem
+    {
+        return new HowToItem();
+    }
+
+    public static function howToSection(): HowToSection
+    {
+        return new HowToSection();
+    }
+
+    public static function howToStep(): HowToStep
+    {
+        return new HowToStep();
+    }
+
+    public static function howToSupply(): HowToSupply
+    {
+        return new HowToSupply();
+    }
+
+    public static function howToTip(): HowToTip
+    {
+        return new HowToTip();
+    }
+
+    public static function howToTool(): HowToTool
+    {
+        return new HowToTool();
+    }
+
     public static function iceCreamShop(): IceCreamShop
     {
         return new IceCreamShop();
@@ -1537,6 +1622,11 @@ class Schema
         return new MediaObject();
     }
 
+    public static function mediaSubscription(): MediaSubscription
+    {
+        return new MediaSubscription();
+    }
+
     public static function medicalOrganization(): MedicalOrganization
     {
         return new MedicalOrganization();
@@ -1590,6 +1680,11 @@ class Schema
     public static function monetaryAmount(): MonetaryAmount
     {
         return new MonetaryAmount();
+    }
+
+    public static function monetaryAmountDistribution(): MonetaryAmountDistribution
+    {
+        return new MonetaryAmountDistribution();
     }
 
     public static function mosque(): Mosque
@@ -1755,6 +1850,11 @@ class Schema
     public static function nutritionInformation(): NutritionInformation
     {
         return new NutritionInformation();
+    }
+
+    public static function occupation(): Occupation
+    {
+        return new Occupation();
     }
 
     public static function oceanBodyOfWater(): OceanBodyOfWater
@@ -1967,6 +2067,11 @@ class Schema
         return new PhotographAction();
     }
 
+    public static function physician(): Physician
+    {
+        return new Physician();
+    }
+
     public static function place(): Place
     {
         return new Place();
@@ -2015,6 +2120,11 @@ class Schema
     public static function postalAddress(): PostalAddress
     {
         return new PostalAddress();
+    }
+
+    public static function preOrderAction(): PreOrderAction
+    {
+        return new PreOrderAction();
     }
 
     public static function prependAction(): PrependAction
@@ -2105,6 +2215,11 @@ class Schema
     public static function quantitativeValue(): QuantitativeValue
     {
         return new QuantitativeValue();
+    }
+
+    public static function quantitativeValueDistribution(): QuantitativeValueDistribution
+    {
+        return new QuantitativeValueDistribution();
     }
 
     public static function quantity(): Quantity
@@ -2462,6 +2577,11 @@ class Schema
         return new SomeProducts();
     }
 
+    public static function speakableSpecification(): SpeakableSpecification
+    {
+        return new SpeakableSpecification();
+    }
+
     public static function specialty(): Specialty
     {
         return new Specialty();
@@ -2722,6 +2842,11 @@ class Schema
         return new TravelAgency();
     }
 
+    public static function trip(): Trip
+    {
+        return new Trip();
+    }
+
     public static function typeAndQuantityNode(): TypeAndQuantityNode
     {
         return new TypeAndQuantityNode();
@@ -2935,6 +3060,11 @@ class Schema
     public static function winery(): Winery
     {
         return new Winery();
+    }
+
+    public static function workersUnion(): WorkersUnion
+    {
+        return new WorkersUnion();
     }
 
     public static function writeAction(): WriteAction

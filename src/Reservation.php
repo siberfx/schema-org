@@ -12,8 +12,10 @@ namespace Spatie\SchemaOrg;
  * rental cars, use [[Offer]].
  *
  * @see http://schema.org/Reservation
+ *
+ * @mixin \Spatie\SchemaOrg\Intangible
  */
-class Reservation extends Intangible
+class Reservation extends BaseType
 {
     /**
      * 'bookingAgent' is an out-dated term indicating a 'broker' that serves as
@@ -76,8 +78,16 @@ class Reservation extends Intangible
     }
 
     /**
-     * The currency (in 3-letter ISO 4217 format) of the price or a price
-     * component, when attached to [[PriceSpecification]] and its subtypes.
+     * The currency of the price, or a price component when attached to
+     * [[PriceSpecification]] and its subtypes.
+     * 
+     * Use standard formats: [ISO 4217 currency
+     * format](http://en.wikipedia.org/wiki/ISO_4217) e.g. "USD"; [Ticker
+     * symbol](https://en.wikipedia.org/wiki/List_of_cryptocurrencies) for
+     * cryptocurrencies e.g. "BTC"; well known names for [Local Exchange
+     * Tradings
+     * Systems](https://en.wikipedia.org/wiki/Local_exchange_trading_system)
+     * (LETS) and other currency types e.g. "Ithaca HOUR".
      *
      * @param string|string[] $priceCurrency
      *
@@ -180,6 +190,13 @@ class Reservation extends Intangible
     /**
      * The total price for the reservation or ticket, including applicable
      * taxes, shipping, etc.
+     * 
+     * Usage guidelines:
+     * 
+     * * Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT
+     * NINE' (U+0039)) rather than superficially similiar Unicode symbols.
+     * * Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a
+     * decimal point. Avoid using these symbols as a readability separator.
      *
      * @param PriceSpecification|PriceSpecification[]|float|float[]|int|int[]|string|string[] $totalPrice
      *

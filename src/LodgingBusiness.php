@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * A lodging business, such as a motel, hotel, or inn.
  *
  * @see http://schema.org/LodgingBusiness
+ *
+ * @mixin \Spatie\SchemaOrg\LocalBusiness
  */
-class LodgingBusiness extends LocalBusiness
+class LodgingBusiness extends BaseType
 {
     /**
      * An amenity feature (e.g. a characteristic or service) of the
@@ -41,9 +43,9 @@ class LodgingBusiness extends LocalBusiness
     }
 
     /**
-     * A language someone may use with the item. Please use one of the language
-     * codes from the [IETF BCP 47 standard](http://tools.ietf.org/html/bcp47).
-     * See also [[inLanguage]]
+     * A language someone may use with or at the item, service or place. Please
+     * use one of the language codes from the [IETF BCP 47
+     * standard](http://tools.ietf.org/html/bcp47). See also [[inLanguage]]
      *
      * @param Language|Language[]|string|string[] $availableLanguage
      *
@@ -82,6 +84,23 @@ class LodgingBusiness extends LocalBusiness
     public function checkoutTime($checkoutTime)
     {
         return $this->setProperty('checkoutTime', $checkoutTime);
+    }
+
+    /**
+     * The number of rooms (excluding bathrooms and closets) of the
+     * accommodation or lodging business.
+     * Typical unit code(s): ROM for room or C62 for no unit. The type of room
+     * can be put in the unitText property of the QuantitativeValue.
+     *
+     * @param QuantitativeValue|QuantitativeValue[]|float|float[]|int|int[] $numberOfRooms
+     *
+     * @return static
+     *
+     * @see http://schema.org/numberOfRooms
+     */
+    public function numberOfRooms($numberOfRooms)
+    {
+        return $this->setProperty('numberOfRooms', $numberOfRooms);
     }
 
     /**

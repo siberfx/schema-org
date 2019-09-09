@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * Entities that have a somewhat fixed, physical extension.
  *
  * @see http://schema.org/Place
+ *
+ * @mixin \Spatie\SchemaOrg\Thing
  */
-class Place extends Thing
+class Place extends BaseType
 {
     /**
      * A property-value pair representing an additional characteristics of the
@@ -229,6 +231,20 @@ class Place extends Thing
     }
 
     /**
+     * A flag to signal that the item, event, or place is accessible for free.
+     *
+     * @param bool|bool[] $isAccessibleForFree
+     *
+     * @return static
+     *
+     * @see http://schema.org/isAccessibleForFree
+     */
+    public function isAccessibleForFree($isAccessibleForFree)
+    {
+        return $this->setProperty('isAccessibleForFree', $isAccessibleForFree);
+    }
+
+    /**
      * The International Standard of Industrial Classification of All Economic
      * Activities (ISIC), Revision 4 code for a particular organization,
      * business person, or place.
@@ -343,6 +359,21 @@ class Place extends Thing
     }
 
     /**
+     * A flag to signal that the [[Place]] is open to public visitors.  If this
+     * property is omitted there is no assumed default boolean value
+     *
+     * @param bool|bool[] $publicAccess
+     *
+     * @return static
+     *
+     * @see http://schema.org/publicAccess
+     */
+    public function publicAccess($publicAccess)
+    {
+        return $this->setProperty('publicAccess', $publicAccess);
+    }
+
+    /**
      * A review of the item.
      *
      * @param Review|Review[] $review
@@ -368,6 +399,20 @@ class Place extends Thing
     public function reviews($reviews)
     {
         return $this->setProperty('reviews', $reviews);
+    }
+
+    /**
+     * A slogan or motto associated with the item.
+     *
+     * @param string|string[] $slogan
+     *
+     * @return static
+     *
+     * @see http://schema.org/slogan
+     */
+    public function slogan($slogan)
+    {
+        return $this->setProperty('slogan', $slogan);
     }
 
     /**

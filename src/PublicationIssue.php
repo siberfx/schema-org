@@ -7,12 +7,14 @@ namespace Spatie\SchemaOrg;
  * publication volume, often numbered, usually containing a grouping of works
  * such as articles.
  * 
- * [blog
+ * See also [blog
  * post](http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html).
  *
  * @see http://schema.org/PublicationIssue
+ *
+ * @mixin \Spatie\SchemaOrg\CreativeWork
  */
-class PublicationIssue extends CreativeWork
+class PublicationIssue extends BaseType
 {
     /**
      * Identifies the issue of publication; for example, "iii" or "2".

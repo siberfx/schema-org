@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * A permit issued by an organization, e.g. a parking pass.
  *
  * @see http://schema.org/Permit
+ *
+ * @mixin \Spatie\SchemaOrg\Intangible
  */
-class Permit extends Intangible
+class Permit extends BaseType
 {
     /**
      * The organization issuing the ticket or permit.
@@ -52,7 +54,7 @@ class Permit extends Intangible
     }
 
     /**
-     * The time validity of the permit.
+     * The duration of validity of a permit or similar thing.
      *
      * @param Duration|Duration[] $validFor
      *
@@ -80,7 +82,7 @@ class Permit extends Intangible
     }
 
     /**
-     * The geographic area where the permit is valid.
+     * The geographic area where a permit or similar thing is valid.
      *
      * @param AdministrativeArea|AdministrativeArea[] $validIn
      *

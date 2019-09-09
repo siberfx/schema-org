@@ -9,13 +9,15 @@ namespace Spatie\SchemaOrg;
  * provider.
  *
  * @see http://schema.org/MenuSection
+ *
+ * @mixin \Spatie\SchemaOrg\CreativeWork
  */
-class MenuSection extends CreativeWork
+class MenuSection extends BaseType
 {
     /**
      * A food or drink item contained in a menu or menu section.
      *
-     * @param MenuSection|MenuSection[] $hasMenuItem
+     * @param MenuItem|MenuItem[] $hasMenuItem
      *
      * @return static
      *

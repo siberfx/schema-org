@@ -10,8 +10,10 @@ namespace Spatie\SchemaOrg;
  * (VideoObject), and a high and low bandwidth audio stream (2 AudioObject's).
  *
  * @see http://schema.org/MediaObject
+ *
+ * @mixin \Spatie\SchemaOrg\CreativeWork
  */
-class MediaObject extends CreativeWork
+class MediaObject extends BaseType
 {
     /**
      * A NewsArticle associated with the Media Object.
@@ -116,7 +118,20 @@ class MediaObject extends CreativeWork
     }
 
     /**
-     * mp3, mpeg4, etc.
+     * Media type typically expressed using a MIME format (see [IANA
+     * site](http://www.iana.org/assignments/media-types/media-types.xhtml) and
+     * [MDN
+     * reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types))
+     * e.g. application/zip for a SoftwareApplication binary, audio/mpeg for
+     * .mp3 etc.).
+     * 
+     * In cases where a [[CreativeWork]] has several media type representations,
+     * [[encoding]] can be used to indicate each [[MediaObject]] alongside
+     * particular [[encodingFormat]] information.
+     * 
+     * Unregistered or niche encoding and file formats can be indicated instead
+     * via the most appropriate URL, e.g. defining Web page or a
+     * Wikipedia/Wikidata entry.
      *
      * @param string|string[] $encodingFormat
      *
@@ -130,18 +145,26 @@ class MediaObject extends CreativeWork
     }
 
     /**
-     * Date the content expires and is no longer useful or available. Useful for
-     * videos.
+     * The endTime of something. For a reserved event or service (e.g.
+     * FoodEstablishmentReservation), the time that it is expected to end. For
+     * actions that span a period of time, when the action was performed. e.g.
+     * John wrote a book from January to *December*. For media, including audio
+     * and video, it's the time offset of the end of a clip within a larger
+     * file.
+     * 
+     * Note that Event uses startDate/endDate instead of startTime/endTime, even
+     * when describing dates with times. This situation may be clarified in
+     * future revisions.
      *
-     * @param \DateTimeInterface|\DateTimeInterface[] $expires
+     * @param \DateTimeInterface|\DateTimeInterface[] $endTime
      *
      * @return static
      *
-     * @see http://schema.org/expires
+     * @see http://schema.org/endTime
      */
-    public function expires($expires)
+    public function endTime($endTime)
     {
-        return $this->setProperty('expires', $expires);
+        return $this->setProperty('endTime', $endTime);
     }
 
     /**
@@ -217,6 +240,29 @@ class MediaObject extends CreativeWork
     public function requiresSubscription($requiresSubscription)
     {
         return $this->setProperty('requiresSubscription', $requiresSubscription);
+    }
+
+    /**
+     * The startTime of something. For a reserved event or service (e.g.
+     * FoodEstablishmentReservation), the time that it is expected to start. For
+     * actions that span a period of time, when the action was performed. e.g.
+     * John wrote a book from *January* to December. For media, including audio
+     * and video, it's the time offset of the start of a clip within a larger
+     * file.
+     * 
+     * Note that Event uses startDate/endDate instead of startTime/endTime, even
+     * when describing dates with times. This situation may be clarified in
+     * future revisions.
+     *
+     * @param \DateTimeInterface|\DateTimeInterface[] $startTime
+     *
+     * @return static
+     *
+     * @see http://schema.org/startTime
+     */
+    public function startTime($startTime)
+    {
+        return $this->setProperty('startTime', $startTime);
     }
 
     /**

@@ -1,7 +1,8 @@
 # A Fluent Builder For Schema.org Types And ld+json Generator
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/schema-org.svg?style=flat-square)](https://packagist.org/packages/spatie/schema-org)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Code coverage](https://scrutinizer-ci.com/g/spatie/schema-org/badges/coverage.png)](https://scrutinizer-ci.com/g/spatie/schema-org)
 [![Build Status](https://img.shields.io/travis/spatie/schema-org/master.svg?style=flat-square)](https://travis-ci.org/spatie/schema-org)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/schema-org.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/schema-org)
 [![StyleCI](https://styleci.io/repos/74684096/shield?branch=master)](https://styleci.io/repos/74684096)
@@ -58,6 +59,18 @@ $localBusiness->name('Spatie');
 
 > *All types also accept arrays of the expected data type, for example `sameAs` accepts a string or an array of strings.*
 
+All types also implement the SPL's `ArrayAccess` for accessing the properties via array notation:
+
+```php
+$anotherLocalBusiness = new LocalBusiness();
+var_dump(isset($anotherLocalBusiness['name'])); // => false
+$anotherLocalBusiness['name'] = 'Spatie';
+var_dump(isset($anotherLocalBusiness['name'])); // => true
+var_dump($anotherLocalBusiness['name']); // => 'Spatie'
+unset($anotherLocalBusiness['name']);
+var_dump(isset($anotherLocalBusiness['name'])); // => false
+```
+
 Types can be converted to an array or rendered to a script.
 
 ```php
@@ -66,6 +79,20 @@ $localBusiness->toArray();
 $localBusiness->toScript();
 
 echo $localBusiness; // Same output as `toScript()`
+```
+
+Additionally, all types can be converted to a plain JSON string by just calling `json_encode()` with your object:
+
+```php
+echo json_encode($localBusiness);
+```
+
+### Enumerations
+
+As of v1.6.0, all [Enumeration](http://schema.org/Enumeration) child types are available as classes with constants.
+
+```php
+Schema::book()->bookFormat(Spatie\SchemaOrg\BookFormatType::Hardcover);
 ```
 
 There's no full API documentation for types and properties. You can refer to [the source](https://github.com/spatie/schema-org/tree/master/src) or to [the schema.org website](http://schema.org).
@@ -122,6 +149,33 @@ $localBusiness->getContext(); // 'http://schema.org'
 $localBusiness->getType(); // 'LocalBusiness'
 ```
 
+### Graph - multiple items
+
+The Graph has a lot of methods and utilities - the type-safe and simplest way is to use the overloaded methods of the `Spatie\SchemaOrg\Schema` class itself. These methods will get an already created or new instance of the requested schema.
+
+```php
+$graph = new Graph();
+
+// Create a product and prelink organization
+$graph
+    ->product()
+    ->name('My cool Product')
+    ->brand($graph->organization());
+
+// Hide the organization from the created script tag
+$graph->hide(\Spatie\SchemaOrg\Organization::class);
+
+// Somewhere else fill out the organization
+$graph
+    ->organization()
+    ->name('My awesome Company');
+
+// Render graph to script tag
+echo $graph;
+```
+
+With these tools the graph is a collection of all available schemas, can link these schemas with each other and prevent helper schemas from being rendered in the script-tag.
+
 ## Known Issues
 
 ### Type Inheritance
@@ -142,7 +196,6 @@ Schema::localBusiness()
 
 ### Other Minor Issues
 
-- Some docblocks have some formatting issues (PR's welcome!)
 - The `Float` type isn't available since it's a reserved keyword in PHP
 - The `Physician` type isn't available since it extends a type from the `health` extension spec
 
@@ -181,7 +234,7 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie).
 All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License

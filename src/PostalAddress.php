@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * The mailing address.
  *
  * @see http://schema.org/PostalAddress
+ *
+ * @mixin \Spatie\SchemaOrg\ContactPoint
  */
-class PostalAddress extends ContactPoint
+class PostalAddress extends BaseType
 {
     /**
      * The country. For example, USA. You can also provide the two-letter [ISO
@@ -25,7 +27,8 @@ class PostalAddress extends ContactPoint
     }
 
     /**
-     * The locality. For example, Mountain View.
+     * The locality in which the street address is, and which is in the region.
+     * For example, Mountain View.
      *
      * @param string|string[] $addressLocality
      *
@@ -39,7 +42,9 @@ class PostalAddress extends ContactPoint
     }
 
     /**
-     * The region. For example, CA.
+     * The region in which the locality is, and which is in the country. For
+     * example, California or another appropriate first-level [Administrative
+     * division](https://en.wikipedia.org/wiki/List_of_administrative_divisions_by_country)
      *
      * @param string|string[] $addressRegion
      *

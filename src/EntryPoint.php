@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * An entry point, within some Web-based protocol.
  *
  * @see http://schema.org/EntryPoint
+ *
+ * @mixin \Spatie\SchemaOrg\Intangible
  */
-class EntryPoint extends Intangible
+class EntryPoint extends BaseType
 {
     /**
      * An application that can complete the request.
@@ -28,7 +30,7 @@ class EntryPoint extends Intangible
      * given URL. To specify a specific application or operating system
      * instance, use actionApplication.
      *
-     * @param |[] $actionPlatform
+     * @param string|string[] $actionPlatform
      *
      * @return static
      *

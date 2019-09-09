@@ -7,7 +7,7 @@ class TypeCollection
     /** @var array */
     private $types = [];
 
-    public function __construct(array $types, array $properties)
+    public function __construct(array $types, array $properties, array $constants)
     {
         $typeNames = array_map(function (Type $type) {
             return $type->name;
@@ -18,7 +18,21 @@ class TypeCollection
         ksort($this->types);
 
         foreach ($properties as $property) {
+            foreach ($property->ranges as $range) {
+                if (
+                    strpos($range, '[]') === false
+                    && ! in_array($range, ['bool', 'false', 'true', '\DateTimeInterface', 'string', 'float', 'int'])
+                    && ! isset($this->types[$range])
+                ) {
+                    $property->pending = true;
+                }
+            }
+
             $this->addProperty($property);
+        }
+
+        foreach ($constants as $constant) {
+            $this->addConstant($constant);
         }
     }
 
@@ -30,6 +44,13 @@ class TypeCollection
             }
 
             $this->types[$type]->addProperty($property);
+        }
+    }
+
+    private function addConstant(Constant $constant)
+    {
+        if (isset($this->types[$constant->type])) {
+            $this->types[$constant->type]->addConstant($constant);
         }
     }
 

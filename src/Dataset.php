@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * A body of structured information describing some topic(s) of interest.
  *
  * @see http://schema.org/Dataset
+ *
+ * @mixin \Spatie\SchemaOrg\CreativeWork
  */
-class Dataset extends CreativeWork
+class Dataset extends BaseType
 {
     /**
      * A data catalog which contains this dataset.
@@ -83,33 +85,19 @@ class Dataset extends CreativeWork
     }
 
     /**
-     * The range of spatial applicability of a dataset, e.g. for a dataset of
-     * New York weather, the state of New York.
+     * The International Standard Serial Number (ISSN) that identifies this
+     * serial publication. You can repeat this property to identify different
+     * formats of, or the linking ISSN (ISSN-L) for, this serial publication.
      *
-     * @param Place|Place[] $spatial
-     *
-     * @return static
-     *
-     * @see http://schema.org/spatial
-     */
-    public function spatial($spatial)
-    {
-        return $this->setProperty('spatial', $spatial);
-    }
-
-    /**
-     * The range of temporal applicability of a dataset, e.g. for a 2011 census
-     * dataset, the year 2011 (in ISO 8601 time interval format).
-     *
-     * @param \DateTimeInterface|\DateTimeInterface[] $temporal
+     * @param string|string[] $issn
      *
      * @return static
      *
-     * @see http://schema.org/temporal
+     * @see http://schema.org/issn
      */
-    public function temporal($temporal)
+    public function issn($issn)
     {
-        return $this->setProperty('temporal', $temporal);
+        return $this->setProperty('issn', $issn);
     }
 
 }

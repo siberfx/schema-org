@@ -1,10 +1,11 @@
 <?php
 
-namespace Spatie\Skeleton\Test;
+namespace Spatie\SchemaOrg\Tests;
 
 use DateTime;
 use Spatie\SchemaOrg\BaseType;
 use PHPUnit\Framework\TestCase;
+use Spatie\SchemaOrg\Exceptions\InvalidProperty;
 
 class BaseTypeTest extends TestCase
 {
@@ -13,7 +14,7 @@ class BaseTypeTest extends TestCase
     {
         $type = new DummyType();
 
-        $this->assertEquals('http://schema.org', $type->getContext());
+        $this->assertEquals('https://schema.org', $type->getContext());
     }
 
     /** @test */
@@ -36,6 +37,16 @@ class BaseTypeTest extends TestCase
         $type->setProperty('foo', 'bar');
 
         $this->assertEquals(['foo' => 'bar'], $type->getProperties());
+    }
+
+    /** @test */
+    public function it_can_not_set_a_null_value()
+    {
+        $type = new DummyType();
+
+        $type->setProperty('foo', null);
+
+        $this->assertEquals([], $type->getProperties());
     }
 
     /** @test */
@@ -84,7 +95,7 @@ class BaseTypeTest extends TestCase
         $type->setProperty('boolean', true);
 
         $expected = [
-            '@context' => 'http://schema.org',
+            '@context' => 'https://schema.org',
             '@type' => 'DummyType',
             'string' => 'Hi',
             'array' => ['Yo'],
@@ -103,7 +114,7 @@ class BaseTypeTest extends TestCase
         $type->setProperty('dateCreated', DateTime::createFromFormat(DateTime::ATOM, '2017-01-01T00:00:00+0000'));
 
         $expected = [
-            '@context' => 'http://schema.org',
+            '@context' => 'https://schema.org',
             '@type' => 'DummyType',
             'dateCreated' => '2017-01-01T00:00:00+00:00',
         ];
@@ -122,7 +133,7 @@ class BaseTypeTest extends TestCase
         $type->setProperty('child', $child);
 
         $expected = [
-            '@context' => 'http://schema.org',
+            '@context' => 'https://schema.org',
             '@type' => 'DummyType',
             'child' => [
                 '@type' => 'DummyType',
@@ -147,7 +158,7 @@ class BaseTypeTest extends TestCase
         $type->setProperty('children', [$child1, $child2]);
 
         $expected = [
-            '@context' => 'http://schema.org',
+            '@context' => 'https://schema.org',
             '@type' => 'DummyType',
             'children' => [
                 [
@@ -171,7 +182,7 @@ class BaseTypeTest extends TestCase
         $type->setProperty('foo', 'bar');
 
         $expected = '<script type="application/ld+json">'.
-            '{"@context":"http:\/\/schema.org","@type":"DummyType","foo":"bar"}'.
+            '{"@context":"https:\/\/schema.org","@type":"DummyType","foo":"bar"}'.
         '</script>';
 
         $this->assertEquals($expected, $type->toScript());
@@ -185,6 +196,117 @@ class BaseTypeTest extends TestCase
         $type->foo('bar');
 
         $this->assertEquals(['foo' => 'bar'], $type->getProperties());
+    }
+
+    /** @test */
+    public function it_can_use_array_access_to_set_a_property()
+    {
+        $type = new DummyType();
+
+        $type['foo'] = 'bar';
+
+        $this->assertEquals(['foo' => 'bar'], $type->getProperties());
+    }
+
+    /** @test */
+    public function it_can_use_array_access_to_unset_a_property()
+    {
+        $type = new DummyType();
+
+        $type->setProperty('foo', 'bar');
+        $type->setProperty('bar', 'baz');
+        unset($type['foo']);
+
+        $this->assertEquals(['bar' => 'baz'], $type->getProperties());
+    }
+
+    /** @test */
+    public function it_can_use_array_access_to_determine_if_a_property_exists()
+    {
+        $type = new DummyType();
+
+        $type->setProperty('foo', 'bar');
+
+        $this->assertTrue(isset($type['foo']));
+        $this->assertFalse(isset($type['bar']));
+    }
+
+    /** @test */
+    public function it_can_use_array_access_to_get_a_property()
+    {
+        $type = new DummyType();
+
+        $type->setProperty('foo', 'bar');
+
+        $this->assertEquals('bar', $type['foo']);
+    }
+
+    /** @test */
+    public function it_can_be_json_serialized()
+    {
+        $child = new DummyType();
+        $child->setProperty('bar', 'baz');
+
+        $type = new DummyType();
+        $type->setProperty('foo', 'bar');
+        $type->setProperty('child', $child);
+        $type->setProperty('array', [
+          'child' => $child,
+          'hello' => 'world',
+        ]);
+        $type->setProperty('string', new class() {
+            public function __toString()
+            {
+                return 'lorem ipsum';
+            }
+        });
+
+        $expected = [
+            '@context' => 'https://schema.org',
+            '@type' => 'DummyType',
+            'foo' => 'bar',
+            'child' => [
+                '@type' => 'DummyType',
+                'bar' => 'baz',
+            ],
+            'array' => [
+              'child' => [
+                  '@type' => 'DummyType',
+                  'bar' => 'baz',
+              ],
+              'hello' => 'world',
+            ],
+            'string' => 'lorem ipsum',
+        ];
+
+        $this->assertEquals($expected, $type->jsonSerialize(), 'Return value of `jsonSerialize` is wrong');
+        $this->assertEquals(json_encode($expected), json_encode($type), 'JSON representation is wrong');
+    }
+
+    /** @test */
+    public function it_will_throw_invalid_property_exception_with_object_property()
+    {
+        $this->expectException(InvalidProperty::class);
+
+        $type = new DummyType();
+        $type->setProperty('foo', new class() {
+        });
+
+        $type->jsonSerialize();
+    }
+
+    /** @test */
+    public function it_can_be_casted_to_string()
+    {
+        $type = new DummyType();
+
+        $type->setProperty('foo', 'bar');
+
+        $expected = '<script type="application/ld+json">'.
+            '{"@context":"https:\/\/schema.org","@type":"DummyType","foo":"bar"}'.
+        '</script>';
+
+        $this->assertEquals($expected, (string) $type);
     }
 }
 

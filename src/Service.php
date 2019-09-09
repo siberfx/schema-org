@@ -7,8 +7,10 @@ namespace Spatie\SchemaOrg;
  * etc.
  *
  * @see http://schema.org/Service
+ *
+ * @mixin \Spatie\SchemaOrg\Intangible
  */
-class Service extends Intangible
+class Service extends BaseType
 {
     /**
      * The overall rating, based on a collection of reviews or ratings, of the
@@ -332,6 +334,20 @@ class Service extends Intangible
     public function serviceType($serviceType)
     {
         return $this->setProperty('serviceType', $serviceType);
+    }
+
+    /**
+     * A slogan or motto associated with the item.
+     *
+     * @param string|string[] $slogan
+     *
+     * @return static
+     *
+     * @see http://schema.org/slogan
+     */
+    public function slogan($slogan)
+    {
+        return $this->setProperty('slogan', $slogan);
     }
 
 }

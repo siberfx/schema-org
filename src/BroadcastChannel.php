@@ -6,8 +6,10 @@ namespace Spatie\SchemaOrg;
  * A unique instance of a BroadcastService on a CableOrSatelliteService lineup.
  *
  * @see http://schema.org/BroadcastChannel
+ *
+ * @mixin \Spatie\SchemaOrg\Intangible
  */
-class BroadcastChannel extends Intangible
+class BroadcastChannel extends BaseType
 {
     /**
      * The unique address by which the BroadcastService can be identified in a
@@ -22,6 +24,22 @@ class BroadcastChannel extends Intangible
     public function broadcastChannelId($broadcastChannelId)
     {
         return $this->setProperty('broadcastChannelId', $broadcastChannelId);
+    }
+
+    /**
+     * The frequency used for over-the-air broadcasts. Numeric values or simple
+     * ranges e.g. 87-99. In addition a shortcut idiom is supported for
+     * frequences of AM and FM radio channels, e.g. "87 FM".
+     *
+     * @param BroadcastFrequencySpecification|BroadcastFrequencySpecification[]|string|string[] $broadcastFrequency
+     *
+     * @return static
+     *
+     * @see http://schema.org/broadcastFrequency
+     */
+    public function broadcastFrequency($broadcastFrequency)
+    {
+        return $this->setProperty('broadcastFrequency', $broadcastFrequency);
     }
 
     /**

@@ -7,13 +7,14 @@ namespace Spatie\SchemaOrg;
  * multi-volume work, often numbered. It may represent a time span, such as a
  * year.
  * 
- *       <br/><br/>See also <a
- * href="http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html">blog
- * post</a>.
+ * See also [blog
+ * post](http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html).
  *
  * @see http://schema.org/PublicationVolume
+ *
+ * @mixin \Spatie\SchemaOrg\CreativeWork
  */
-class PublicationVolume extends CreativeWork
+class PublicationVolume extends BaseType
 {
     /**
      * The page on which the work ends; for example "138" or "xvi".

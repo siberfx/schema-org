@@ -7,14 +7,14 @@ use ReflectionClass;
 use DateTimeInterface;
 use Spatie\SchemaOrg\Exceptions\InvalidProperty;
 
-abstract class BaseType implements Type
+abstract class BaseType implements Type, \ArrayAccess, \JsonSerializable
 {
     /** @var array */
     protected $properties = [];
 
     public function getContext(): string
     {
-        return 'http://schema.org';
+        return 'https://schema.org';
     }
 
     public function getType(): string
@@ -24,7 +24,9 @@ abstract class BaseType implements Type
 
     public function setProperty(string $property, $value)
     {
-        $this->properties[$property] = $value;
+        if ($value !== null) {
+            $this->properties[$property] = $value;
+        }
 
         return $this;
     }
@@ -57,6 +59,26 @@ abstract class BaseType implements Type
         return $this->properties;
     }
 
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->properties);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->getProperty($offset);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->setProperty($offset, $value);
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->properties[$offset]);
+    }
+
     public function toArray(): array
     {
         $properties = $this->serializeProperty($this->getProperties());
@@ -82,6 +104,10 @@ abstract class BaseType implements Type
             $property = $property->format(DateTime::ATOM);
         }
 
+        if (method_exists($property, '__toString')) {
+            $property = (string) $property;
+        }
+
         if (is_object($property)) {
             throw new InvalidProperty();
         }
@@ -92,6 +118,11 @@ abstract class BaseType implements Type
     public function toScript(): string
     {
         return '<script type="application/ld+json">'.json_encode($this->toArray(), JSON_UNESCAPED_UNICODE).'</script>';
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     public function __call(string $method, array $arguments)
